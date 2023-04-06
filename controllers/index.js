@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const Users = require("../models/users");
-const validateUsers = require("../models/validateUsers");
+const validateUsers = require("../models/validateusers");
 const RegisteredUser = require("../models/registeredusers");
 const { generateToken } = require("../utils");
 
