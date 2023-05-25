@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const registeredUserSchema = new mongoose.Schema({
     email : String,
     date : String,
-    venue : String
+    city : String
 })
 
 // Model for registered users

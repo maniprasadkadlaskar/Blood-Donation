@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 // To generate JWT token for authorization
-module.exports.generateToken = user => {
+module.exports.generateToken = email => {
     const payload = {
-        email : user
+        email : email
     }
 
     const secret = process.env.JWT_SECRET;

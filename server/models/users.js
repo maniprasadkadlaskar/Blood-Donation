@@ -1,19 +1,28 @@
 const mongoose = require("mongoose");
 
-// Schema for users 
-const userSchema = new mongoose.Schema({
-    firstName : String,
-    lastName : String,
-    bod : String,
-    weight : String,
-    bg : String,
+// Schema for user
+const personalSchema = new mongoose.Schema({
+    firstname : String,
+    lastname : String,
+    dob : String,
     gender : String,
-    street : String,
+    bg : String,
+    weight : String,
+    mobile : String,
+})
+
+const addressSchema = new mongoose.Schema({
     area : String,
     city : String,
     pincode : String,
-    mobile : String,
-    email : String
+    state : String,
+    country : String
+})
+
+const userSchema = new mongoose.Schema({
+    email : String,
+    personal : { type : personalSchema },
+    address : { type : addressSchema }
 })
 
 // Model for users 
