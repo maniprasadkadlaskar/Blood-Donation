@@ -51,10 +51,10 @@ module.exports.addUser = async (req, res) => {
 // To register user 
 module.exports.registerUser = async (req, res) => {
     try {
-        const userExist = await LoggedUsers.find({ email: req.body.email });
+        const user = await RegisteredUser.find({ email: req.body.email });
 
-        if (userExist.length !== 0)
-            throw new Error("user already registered");
+        if (user.length == 0)
+            throw new Error("user already exist");
 
         const register = new Users(req.body);
 
