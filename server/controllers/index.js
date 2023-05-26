@@ -53,7 +53,7 @@ module.exports.registerUser = async (req, res) => {
     try {
         const user = await Users.find({ email: req.body.email });
 
-        if (user.length == 0)
+        if (user.length !== 0)
             throw new Error("user already registered");
 
         const register = new Users(req.body);
