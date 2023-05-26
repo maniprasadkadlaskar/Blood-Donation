@@ -4,7 +4,7 @@ import AuthContext from "./context";
 
 const PrivateRoute = () => {
 
-    const user = useContext(AuthContext);
+    const { user , setUser } = useContext(AuthContext);
 
     return(
         <>

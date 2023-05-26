@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
+import api from '../../config/api';
 
 const SignIn = () => {
 
@@ -9,6 +10,7 @@ const SignIn = () => {
     }
 
     const [formData, setFormData] = useState(formEmpty);
+    const navigate = useNavigate();
 
     const inputHandler = (e) => {
         setFormData({
@@ -20,7 +22,16 @@ const SignIn = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         console.log(formData);
-        setFormData(formEmpty);
+        api.post("/signin" , formData)
+        .then(res => {
+            console.log(res.data.message);
+            localStorage.setItem("access_token" , res.data.access_token);
+            setFormData(formEmpty);
+            navigate("/" , { replace:true })
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+        })
     }
 
     return (

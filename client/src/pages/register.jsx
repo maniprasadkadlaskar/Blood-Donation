@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useState  , useContext } from "react";
 import Address from "../components/Register/address";
 import Personal from "../components/Register/personal";
-
+import api from "../config/api";
+import AuthContext from "../config/context";
 const Register = () => {
+
+    const { user } = useContext(AuthContext);
 
     const emptyPersonal = {
         firstname: "",
         lastname: "",
         dob: "",
+        gender: "",
         bg: "",
         weight: "",
-        height: "",
         mobile: ""
     }
 
@@ -26,9 +29,19 @@ const Register = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
-        console.log(personalData);
-        console.log(addressData);
+        api.post("/register" , {
+            email : user.token.email,
+            personal : personalData,
+            address : addressData
+        })
+        .then(res => {
+            console.log(res.data.message);
+            setPersonalData(emptyPersonal);
+            setAddressData(emptyAddress);
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+        })
     }
 
     return (

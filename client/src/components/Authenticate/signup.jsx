@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link  , useNavigate } from 'react-router-dom';
+import api from '../../config/api';
 
 const SignUp = () => {
 
@@ -9,6 +10,7 @@ const SignUp = () => {
     }
 
     const [formData, setFormData] = useState(formEmpty);
+    const navigate = useNavigate();
 
     const inputHandler = (e) => {
         setFormData({
@@ -20,7 +22,15 @@ const SignUp = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         console.log(formData);
-        setFormData(formEmpty);
+        api.post("/signup" , formData)
+        .then(res => {
+            console.log(res.data.message);
+            setFormData(formEmpty);
+            navigate("/signin" , { replace:true });
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+        })
     }
 
     return (

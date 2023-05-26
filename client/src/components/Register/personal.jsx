@@ -19,22 +19,22 @@ const Personal = ({ personalData , setPersonalData }) => {
             type: "date",
         },
         {
+            title: "Gender",
+            name: "gender",
+            type: "text",
+            placeholder: "Male / Female / Other"
+        },
+        {
             title: "Blood group",
             name: "bg",
             type: "text",
-            placeholder: "Enter Blood group"
+            placeholder: "Blood group O / A ..."
         },
         {
             title: "Weight",
             name: "weight",
             type: "number",
             placeholder: "Enter weight in kg"
-        },
-        {
-            title: "Height",
-            name: "height",
-            type: "number",
-            placeholder: "Enter height in inches"
         },
         {
             title: "Mobile number",

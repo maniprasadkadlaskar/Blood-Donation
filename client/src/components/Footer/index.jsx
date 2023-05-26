@@ -27,11 +27,11 @@ const Footer = () => {
                 <div>
                     <span>Blood Donation site is a site donate blood.</span>
                 </div>
-                <div className='px-2 py-4 space-x-2 flex space-x-12'>
+                <div className='px-2 py-4 flex space-x-12'>
                     {linkList.map((link , index) => {
                         return(
-                            <div className="text-xl">
-                            <Link to={link.url} key={index}>{link.icon}</Link>
+                            <div className="text-xl" key={index}>
+                            <Link to={link.url}>{link.icon}</Link>
                             </div>
                         )
                     })}

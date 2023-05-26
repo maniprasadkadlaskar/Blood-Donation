@@ -1,6 +1,10 @@
-import { useState } from "react"
+import { useState  , useContext } from "react";
+import api from "../config/api";
+import AuthContext from "../config/context";
 
 const Donate = () => {
+
+    const { user } = useContext(AuthContext);
 
     const formItem = [
         {
@@ -32,8 +36,17 @@ const Donate = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
-        console.log(formData);
+        api.post("/donate" , {
+            ...formData,
+            email : user.token.email
+        })
+        .then(res => {
+            console.log(res.data.message);
+            setFormData(emptyForm);
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+        })
     }
 
     return (
