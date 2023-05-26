@@ -10,6 +10,8 @@ import Home from './pages/home';
 import { useState } from 'react';
 import PrivateRoute from './config/privateroute';
 import AuthContext from './config/context';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
@@ -19,6 +21,7 @@ const App = () => {
     <BrowserRouter>
       <AuthContext.Provider value={ { user , setUser } } >
         <Navbar />
+        <ToastContainer/>
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route path='/register' element={<Register />} />

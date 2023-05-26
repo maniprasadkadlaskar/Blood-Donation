@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link , useNavigate } from 'react-router-dom';
 import api from '../../config/api';
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
 
@@ -23,13 +24,17 @@ const SignIn = () => {
         e.preventDefault();
         api.post("/signin" , formData)
         .then(res => {
-            console.log(res.data.message);
+            toast.success(res.data.message , {
+                position : toast.POSITION.TOP_RIGHT
+            })
             localStorage.setItem("access_token" , res.data.access_token);
             setFormData(formEmpty);
             navigate("/" , { replace:true })
         })
         .catch(err => {
-            console.log(err.response.data.message);
+            toast.error(err.response.data.message , {
+                position : toast.POSITION.TOP_RIGHT
+            })
         })
     }
 

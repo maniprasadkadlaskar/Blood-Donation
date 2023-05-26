@@ -1,6 +1,7 @@
 import { useState  , useContext } from "react";
 import api from "../config/api";
 import AuthContext from "../config/context";
+import { toast } from "react-toastify";
 
 const Donate = () => {
 
@@ -41,11 +42,15 @@ const Donate = () => {
             email : user.token.email
         })
         .then(res => {
-            console.log(res.data.message);
+            toast.success(res.data.message , {
+                position : toast.POSITION.TOP_RIGHT
+            });
             setFormData(emptyForm);
         })
         .catch(err => {
-            console.log(err.response.data.message);
+            toast.error(err.response.data.message , {
+                position : toast.POSITION.TOP_RIGHT
+            });
         })
     }
 

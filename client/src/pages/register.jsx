@@ -3,6 +3,8 @@ import Address from "../components/Register/address";
 import Personal from "../components/Register/personal";
 import api from "../config/api";
 import AuthContext from "../config/context";
+import { toast } from "react-toastify";
+
 const Register = () => {
 
     const { user } = useContext(AuthContext);
@@ -35,12 +37,16 @@ const Register = () => {
             address : addressData
         })
         .then(res => {
-            console.log(res.data.message);
+            toast.success(res.data.message , {
+                position : toast.POSITION.TOP_RIGHT
+            });
             setPersonalData(emptyPersonal);
             setAddressData(emptyAddress);
         })
         .catch(err => {
-            console.log(err.response.data.message);
+            toast.error(err.response.data.message , {
+                position : toast.POSITION.TOP_RIGHT
+            });
         })
     }
 

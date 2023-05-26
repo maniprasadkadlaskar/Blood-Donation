@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link , useNavigate } from "react-router-dom";
 import AuthContext from "../../config/context";
 import { List, X } from "react-bootstrap-icons";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
 
@@ -31,6 +32,9 @@ const Navbar = () => {
     const logout = () => {
         localStorage.removeItem("access_token");
         setUser({});
+        toast.success("User loggedout successsfully" , {
+            position : toast.POSITION.TOP_RIGHT
+        })
         navigate("/" , { replace:true});
     }
 
