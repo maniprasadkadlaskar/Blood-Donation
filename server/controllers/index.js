@@ -79,7 +79,7 @@ module.exports.validateUser = async (req, res) => {
         if (user === null)
             throw new Error("Invalid email");
 
-        if (bcrypt.compare(req.body.password, user.password)) {
+        if (await bcrypt.compare(req.body.password, user.password)) {
 
             const token = generateToken(user.email);
 
