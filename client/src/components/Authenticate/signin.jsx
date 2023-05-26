@@ -21,7 +21,6 @@ const SignIn = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(formData);
         api.post("/signin" , formData)
         .then(res => {
             console.log(res.data.message);

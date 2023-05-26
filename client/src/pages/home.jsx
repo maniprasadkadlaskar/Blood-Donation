@@ -4,7 +4,7 @@ import api from "../config/api";
 
 const Home = () => {
 
-    const { user, setUser } = useContext(AuthContext);
+    const { setUser } = useContext(AuthContext);
 
     useEffect(() => {
         api.get("/", {

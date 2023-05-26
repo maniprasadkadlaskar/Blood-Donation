@@ -21,7 +21,6 @@ const SignUp = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(formData);
         api.post("/signup" , formData)
         .then(res => {
             console.log(res.data.message);
