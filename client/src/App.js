@@ -12,6 +12,10 @@ import PrivateRoute from './config/privateroute';
 import AuthContext from './config/context';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './pages/dashboard';
+import About from './components/Dashboard/about';
+import Registration from './components/Dashboard/registration';
+import DetailEdit from './components/Dashboard/edit';
 
 const App = () => {
 
@@ -19,15 +23,20 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <AuthContext.Provider value={ { user , setUser } } >
+      <AuthContext.Provider value={{ user, setUser }} >
         <Navbar />
-        <ToastContainer/>
+        <ToastContainer />
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route path='/register' element={<Register />} />
             <Route path='/donate' element={<Donate />} />
+            <Route path='/dashboard' element={<Dashboard />}>
+              <Route path='/dashboard' element={<About />} />
+              <Route path='/dashboard/registrations' element={<Registration />} />
+              <Route path='/dashboard/edit' element={<DetailEdit />} />
+            </Route>
           </Route>
-          <Route path='/' element={<Home/>} />
+          <Route path='/' element={<Home />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/signin' element={<SignIn />} />
         </Routes>

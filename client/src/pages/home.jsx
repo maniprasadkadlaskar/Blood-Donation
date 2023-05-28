@@ -14,6 +14,7 @@ const Home = () => {
                 setUser({
                     token: res.data.access_token
                 })
+                sessionStorage.setItem("user_email" , res.data.access_token.email);
             })
             .catch(err => {
                 console.log(err.message);

@@ -20,6 +20,12 @@ const Address = ({ addressData , setAddressData }) => {
             placeholder: "Enter pincode"
         },
         {
+            title: "State",
+            name: "state",
+            type: "text",
+            placeholder: "Enter state"
+        },
+        {
             title: "Country",
             name: "country",
             type: "text",

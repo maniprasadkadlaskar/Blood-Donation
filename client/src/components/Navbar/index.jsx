@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link , useNavigate } from "react-router-dom";
-import AuthContext from "../../config/context";
 import { List, X } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
 
-    const { user , setUser } = useContext(AuthContext);
+    const user = sessionStorage.getItem("user_email");
+   
     const [menuState, setMenuState] = useState(false);
     const navigate = useNavigate();
 
@@ -24,14 +24,14 @@ const Navbar = () => {
             path: "/donate"
         },
         {
-            name: user.token?.email,
+            name: user,
             path: "/dashboard"
         }
     ]
 
     const logout = () => {
         localStorage.removeItem("access_token");
-        setUser({});
+        sessionStorage.removeItem("user_email");
         toast.success("User loggedout successsfully" , {
             position : toast.POSITION.TOP_RIGHT
         })
@@ -46,7 +46,7 @@ const Navbar = () => {
                 </div>
                 <div className='sm:block space-x-4 hidden'>
                     <Link to="/">Home</Link>
-                    {user.token ? navList.map((item, index) => {
+                    {user ? navList.map((item, index) => {
                         return (
                             <Link
                                 to={item.path}
@@ -56,7 +56,7 @@ const Navbar = () => {
                             </Link>
                         )
                     }) : <Link to="/signin">Sign In</Link>}
-                    {user.token && <button onClick={logout} >Logout</button>}
+                    {user && <button onClick={logout} >Logout</button>}
                 </div>
                 {menuState ? <X className="text-2xl sm:hidden" onClick={toggleMenu} /> : <List className="text-2xl sm:hidden" onClick={toggleMenu} />}
             </div>
@@ -65,7 +65,7 @@ const Navbar = () => {
                 <div className="p-2">
                     <Link to="/" onClick={toggleMenu}>Home</Link>
                 </div>
-                {user.token ? navList.map((item, index) => {
+                {user ? navList.map((item, index) => {
                     return (
                         <div className="p-2" key={index}>
                             <Link
@@ -81,7 +81,7 @@ const Navbar = () => {
                         <Link to="/signin">Sign In</Link>
                     </div>
                 }
-                {user.token && <div className="p-2">
+                {user && <div className="p-2">
                     <button onClick={logout} >Logout</button>
                 </div>}
             </div>}

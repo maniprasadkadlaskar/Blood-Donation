@@ -1,11 +1,8 @@
-import { useState  , useContext } from "react";
+import { useState } from "react";
 import api from "../config/api";
-import AuthContext from "../config/context";
 import { toast } from "react-toastify";
 
 const Donate = () => {
-
-    const { user } = useContext(AuthContext);
 
     const formItem = [
         {
@@ -21,12 +18,7 @@ const Donate = () => {
         }
     ]
 
-    const emptyForm = {
-        city : "",
-        date : ""
-    }
-
-    const [formData , setFormData] = useState(emptyForm);
+    const [formData , setFormData] = useState({});
 
     const inputHandler = (e) => {
         setFormData({
@@ -39,13 +31,15 @@ const Donate = () => {
         e.preventDefault();
         api.post("/donate" , {
             ...formData,
-            email : user.token.email
+            email : sessionStorage.getItem("user_email")
+        } ,{
+            headers: { Authorization: localStorage.getItem("access_token") }
         })
         .then(res => {
             toast.success(res.data.message , {
                 position : toast.POSITION.TOP_RIGHT
             });
-            setFormData(emptyForm);
+            setFormData({});
         })
         .catch(err => {
             toast.error(err.response.data.message , {

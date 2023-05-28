@@ -1,47 +1,29 @@
-import { useState  , useContext } from "react";
+import { useState } from "react";
 import Address from "../components/Register/address";
 import Personal from "../components/Register/personal";
 import api from "../config/api";
-import AuthContext from "../config/context";
 import { toast } from "react-toastify";
 
 const Register = () => {
 
-    const { user } = useContext(AuthContext);
-
-    const emptyPersonal = {
-        firstname: "",
-        lastname: "",
-        dob: "",
-        gender: "",
-        bg: "",
-        weight: "",
-        mobile: ""
-    }
-
-    const emptyAddress = {
-        area: "",
-        city: "",
-        pincode: "",
-        country: ""
-    }
-
-    const [personalData, setPersonalData] = useState(emptyPersonal);
-    const [addressData, setAddressData] = useState(emptyAddress);
+    const [personalData, setPersonalData] = useState({});
+    const [addressData, setAddressData] = useState({});
 
     const submitHandler = (e) => {
         e.preventDefault();
         api.post("/register" , {
-            email : user.token.email,
+            email : sessionStorage.getItem("user_email"),
             personal : personalData,
             address : addressData
+        }, {
+            headers: { Authorization: localStorage.getItem("access_token") }
         })
         .then(res => {
             toast.success(res.data.message , {
                 position : toast.POSITION.TOP_RIGHT
             });
-            setPersonalData(emptyPersonal);
-            setAddressData(emptyAddress);
+            setPersonalData({});
+            setAddressData({});
         })
         .catch(err => {
             toast.error(err.response.data.message , {
