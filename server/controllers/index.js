@@ -4,20 +4,42 @@ const LoggedUsers = require("../models/loggedusers");
 const RegisteredUser = require("../models/registeredusers");
 const { generateToken } = require("../utils");
 
-// To get all registered users 
-// module.exports.getUsers = async (req, res) => {
-//     try {
-//         const users = await Users.find();
-//         res.status(200).json({
-//             users: users
-//         })
-//     }
-//     catch (err) {
-//         res.status(500).json({
-//             message: err.message
-//         })
-//     }
-// }
+// To get user 
+module.exports.getUser = async (req , res) => {
+    try {
+        const user = await Users.findOne({ email : req.query.email });
+        
+        if(user == null)
+            throw new Error("Invalid user");
+
+        res.status(200).json({
+            user : user,
+            message : "valid registered user"
+        });
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+// To get user registrations 
+module.exports.getRegistration = async (req , res) => {
+    try {
+        const registrations = await RegisteredUser.find({ email : req.query.email });
+
+        res.status(200).json({
+            registrations : registrations,
+            message : "valid registered user"
+        });
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        });
+    }
+}
 
 // To save user
 module.exports.addUser = async (req, res) => {
@@ -62,6 +84,27 @@ module.exports.registerUser = async (req, res) => {
 
         res.status(200).json({
             message: "user registered successfully"
+        })
+    }
+    catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+// To update user 
+module.exports.updateUser = async (req , res) => {
+    try {
+        const user = await Users.findOne({ email: req.body.email });
+
+        if (user == null)
+            throw new Error("Invalid user");
+
+        await Users.updateOne({ email: req.body.email } , req.body);
+
+        res.status(200).json({
+            message: "user updated successfully"
         })
     }
     catch (err) {
@@ -122,10 +165,15 @@ module.exports.donateRegister = async (req, res) => {
     }
 }
 
-// To authorize users 
-module.exports.authorizeUser = (req, res) => {
+// To authorize user
+module.exports.authorizeUser = async (req, res) => {
+    const userExist = await Users.exists({ email: req.decodedToken.email });
+
     res.status(200).json({
         message: "user authorized",
-        access_token: req.decodedToken
+        access_token: { 
+            ...req.decodedToken,
+            isRegistered : userExist
+        }
     })
 }
