@@ -23,11 +23,12 @@ const Footer = () => {
             <div className='p-2 text-xl'>
                 <span>Blood Donation</span>
             </div>
-            <div className='px-2 py-4 sm:flex justify-between'>
+            <div className='pl-2 pr-12 py-4 sm:flex justify-between'>
                 <div>
-                    <span>Blood Donation site is a site donate blood.</span>
+                    <span>Blood Donation website serves as a resource hub, providing valuable information about the blood donation process, eligibility criteria, and the benefits of donating blood. 
+                        We strive to educate and empower individuals to become blood donors, fostering a community united in compassion and solidarity.</span>
                 </div>
-                <div className='px-2 py-4 flex space-x-12'>
+                <div className='px-12 my-6 flex space-x-12'>
                     {linkList.map((link , index) => {
                         return(
                             <div className="text-xl" key={index}>
