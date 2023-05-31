@@ -42,7 +42,7 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <div className="w-full h-full flex sm:hidden absolute">
+            <div className="h-full flex sm:hidden absolute">
                 {menuState && <div className="px-2 py-4 bg-red-100 text-lg text-center rounded-lg">
                     <div className='text-2xl'>
                         <span>Dashboard</span>

@@ -1,19 +1,27 @@
 import AuthContext from "../config/context";
 import { useContext, useEffect } from "react";
 import api from "../config/api";
-import Background from "../assets/background.jpg";
+import CountUp from 'react-countup';
+import Image1 from "../assets/image1.jpg";
+import Image2 from "../assets/image2.jpg";
+import Image3 from "../assets/image3.jpg";
+import Image4 from "../assets/image4.jpg";
+import Image5 from "../assets/image5.jpg";
+import Image6 from "../assets/image6.jpg";
 
 const Home = () => {
 
-    const { setUser } = useContext(AuthContext);
+    const { setAuth } = useContext(AuthContext);
+    const images = [Image1, Image2, Image3, Image4, Image5, Image6]
 
     useEffect(() => {
         api.get("/", {
             headers: { Authorization: localStorage.getItem("access_token") }
         })
             .then(res => {
-                setUser({
-                    token: res.data.access_token
+                setAuth({
+                    token: res.data.access_token,
+                    isRegistered: res.data.access_token.isRegistered
                 })
                 sessionStorage.setItem("user_email", res.data.access_token.email);
             })
@@ -24,15 +32,9 @@ const Home = () => {
 
     return (
         <div>
-            <div className="">
-                <div>
-                    <img 
-                        src={Background}
-                        className="w-full h-96 brightness-50"
-                    />
-                </div>
-                <div className="top-24 inset-x-5 p-8 text-3xl text-white font-bold bg-red-600 rounded-xl bg-opacity-80 absolute">
-                    <span>Blood donation<br/>A simple act of kindness that has the power to change lives.</span>
+            <div>
+                <div className="px-12 py-32 text-3xl text-white font-bold bg-red-600">
+                    <span>Blood donation<br />A simple act of kindness that has the power to change lives.</span>
                 </div>
             </div>
             <div className="m-4 grid sm:grid-cols-2">
@@ -52,8 +54,28 @@ const Home = () => {
                         <span>Registered users</span>
                     </div>
                     <div className="mx-24 my-4 px-2 py-12 rounded-xl text-6xl font-bold bg-yellow-400">
-                        <span>45</span>
+                        <CountUp
+                            start={0}
+                            end={45}
+                            duration={2}
+                        />
                     </div>
+                </div>
+            </div>
+            <div className="m-4 text-center">
+                <div className="m-2 text-xl font-bold">
+                    <span>Images</span>
+                </div>
+                <div className="m-8 grid sm:grid-cols-3">
+                    {images.map((url, index) => {
+                        return (
+                            <img
+                                src={url}
+                                className="m-4 w-96 h-64 rounded-xl"
+                                key={index}
+                            />
+                        )
+                    })}
                 </div>
             </div>
         </div>

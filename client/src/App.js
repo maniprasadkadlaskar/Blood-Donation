@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -19,11 +18,11 @@ import DetailEdit from './components/Dashboard/edit';
 
 const App = () => {
 
-  const [user, setUser] = useState({});
+  const [auth, setAuth] = useState({});
 
   return (
     <BrowserRouter>
-      <AuthContext.Provider value={{ user, setUser }} >
+      <AuthContext.Provider value={{ auth, setAuth }} >
         <Navbar />
         <ToastContainer />
         <Routes>

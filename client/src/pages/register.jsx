@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useState , useContext } from "react";
 import Address from "../components/Register/address";
 import Personal from "../components/Register/personal";
 import api from "../config/api";
 import { toast } from "react-toastify";
+import AuthContext from "../config/context";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 
-    const [personalData, setPersonalData] = useState({});
-    const [addressData, setAddressData] = useState({});
+    const emptyPersonal = {
+        firstname: "",
+        lastname: "",
+        dob: "",
+        gender: "",
+        bg: "",
+        weight: "",
+        mobile: ""
+    }
+
+    const emptyAddress = {
+        area: "",
+        city: "",
+        pincode: "",
+        state: "",
+        country: ""
+    }
+
+    const [personalData, setPersonalData] = useState(emptyPersonal);
+    const [addressData, setAddressData] = useState(emptyAddress);
+    const { auth , setAuth } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -22,8 +44,13 @@ const Register = () => {
             toast.success(res.data.message , {
                 position : toast.POSITION.TOP_RIGHT
             });
-            setPersonalData({});
-            setAddressData({});
+            setPersonalData(emptyPersonal);
+            setAddressData(emptyAddress);
+            setAuth({
+                ...auth,
+                isRegistered : true
+            })
+            navigate("/" , { replace:true })
         })
         .catch(err => {
             toast.error(err.response.data.message , {

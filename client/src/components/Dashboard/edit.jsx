@@ -5,8 +5,27 @@ import api from "../../config/api";
 import { toast } from "react-toastify";
 
 const DetailEdit = () => {
-    const [personalData, setPersonalData] = useState({});
-    const [addressData, setAddressData] = useState({});
+
+    const emptyPersonal = {
+        firstname: "",
+        lastname: "",
+        dob: "",
+        gender: "",
+        bg: "",
+        weight: "",
+        mobile: ""
+    }
+
+    const emptyAddress = {
+        area: "",
+        city: "",
+        pincode: "",
+        state: "",
+        country: ""
+    }
+
+    const [personalData, setPersonalData] = useState(emptyPersonal);
+    const [addressData, setAddressData] = useState(emptyAddress);
 
     useEffect(() => {
         api.get(`/user?email=${sessionStorage.getItem("user_email")}` , {
@@ -35,8 +54,6 @@ const DetailEdit = () => {
                 toast.success(res.data.message, {
                     position: toast.POSITION.TOP_RIGHT
                 });
-                setPersonalData({});
-                setAddressData({});
             })
             .catch(err => {
                 toast.error(err.response.data.message, {

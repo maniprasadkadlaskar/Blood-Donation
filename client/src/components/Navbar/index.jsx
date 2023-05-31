@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState , useContext } from "react";
 import { Link , useNavigate } from "react-router-dom";
 import { List, X } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
+import AuthContext from "../../config/context";
 
 const Navbar = () => {
 
     const user = sessionStorage.getItem("user_email");
+    const { auth } = useContext(AuthContext);
    
     const [menuState, setMenuState] = useState(false);
     const navigate = useNavigate();
@@ -16,18 +18,16 @@ const Navbar = () => {
 
     const navList = [
         {
-            name: "Register",
-            path: "/register"
-        },
-        {
             name: "Donate",
             path: "/donate"
         },
         {
             name: user,
-            path: "/dashboard"
+            path: auth.isRegistered ? "/dashboard" : "/register"
         }
     ]
+
+    console.log(auth);
 
     const logout = () => {
         localStorage.removeItem("access_token");
