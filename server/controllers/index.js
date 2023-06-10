@@ -146,13 +146,18 @@ module.exports.validateUser = async (req, res) => {
 // To register for donation  
 module.exports.donateRegister = async (req, res) => {
     try {
-        const user = RegisteredUser({
+        const user = await Users.findOne({ email: req.body.email });
+
+        if (user === null)
+            throw new Error("User not registered");
+
+        const register = RegisteredUser({
             email: req.body.email,
             city: req.body.city,
             date: req.body.date
         })
 
-        await user.save();
+        await register.save();
 
         res.status(200).json({
             message: "user registered for donation"
