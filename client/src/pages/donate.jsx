@@ -3,6 +3,10 @@ import api from "../config/api";
 import { toast } from "react-toastify";
 
 const Donate = () => {
+    const emptyForm = {
+        city: "",
+        date: ""
+    }
 
     const formItem = [
         {
@@ -18,7 +22,7 @@ const Donate = () => {
         }
     ]
 
-    const [formData , setFormData] = useState({});
+    const [formData , setFormData] = useState(emptyForm);
 
     const inputHandler = (e) => {
         setFormData({
@@ -39,7 +43,7 @@ const Donate = () => {
             toast.success(res.data.message , {
                 position : toast.POSITION.TOP_RIGHT
             });
-            setFormData({});
+            setFormData(emptyForm);
         })
         .catch(err => {
             toast.error(err.response.data.message , {

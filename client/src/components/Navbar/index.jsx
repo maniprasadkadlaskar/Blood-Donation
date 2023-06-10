@@ -19,11 +19,11 @@ const Navbar = () => {
     const navList = [
         {
             name: "Donate",
-            path: "/donate"
+            path: auth.isRegistered ? "/donate" : "/register"
         },
         {
             name: user,
-            path: auth.isRegistered ? "/dashboard" : "/register"
+            path: auth.isRegistered ? "/dashboard" : "/"
         }
     ]
 

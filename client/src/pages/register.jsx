@@ -50,7 +50,7 @@ const Register = () => {
                 ...auth,
                 isRegistered : true
             })
-            navigate("/" , { replace:true })
+            navigate("/donate" , { replace:true })
         })
         .catch(err => {
             toast.error(err.response.data.message , {
