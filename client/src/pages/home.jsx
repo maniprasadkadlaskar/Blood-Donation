@@ -8,13 +8,24 @@ import Image3 from "../assets/image3.jpg";
 import Image4 from "../assets/image4.jpg";
 import Image5 from "../assets/image5.jpg";
 import Image6 from "../assets/image6.jpg";
+import { useState } from "react";
 
 const Home = () => {
 
     const { setAuth } = useContext(AuthContext);
+    const [registrations , setRegistrations] = useState(0);
     const images = [Image1, Image2, Image3, Image4, Image5, Image6]
 
     useEffect(() => {
+        api.get("/registrations")
+            .then(res => {
+                setRegistrations(res.data.registrations);
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+
+
         api.get("/", {
             headers: { Authorization: localStorage.getItem("access_token") }
         })
@@ -56,7 +67,7 @@ const Home = () => {
                     <div className="mx-24 my-4 px-2 py-12 rounded-xl text-6xl font-bold bg-yellow-400">
                         <CountUp
                             start={0}
-                            end={45}
+                            end={registrations}
                             duration={2}
                         />
                     </div>
