@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/" , auth , controller.authorizeUser);
 router.post("/signin" , controller.validateUser);
 router.post("/signup" , controller.addUser);
+router.get("/registrations" , controller.getTotalRegistrations);
 router.post("/register" , auth , controller.registerUser);
 router.post("/donate" , auth , controller.donateRegister);
 router.get("/user" , auth , controller.getUser);

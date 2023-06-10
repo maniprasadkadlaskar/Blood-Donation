@@ -1,8 +1,25 @@
 const bcrypt = require("bcrypt");
 const Users = require("../models/users");
 const LoggedUsers = require("../models/loggedusers");
-const RegisteredUser = require("../models/registeredusers");
+const Registrations = require("../models/registrations");
 const { generateToken } = require("../utils");
+
+// To get number of registrations 
+module.exports.getTotalRegistrations = async (req , res) => {
+    try {
+        const count = await Registrations.countDocuments({});
+
+        res.status(200).json({
+            registrations: count,
+            message: "number of donation registrations"
+        });
+    }
+    catch(e) {
+        res.status(500).json({
+            message: err.message
+        })
+    }
+}
 
 // To get user 
 module.exports.getUser = async (req , res) => {
@@ -27,7 +44,7 @@ module.exports.getUser = async (req , res) => {
 // To get user registrations 
 module.exports.getRegistration = async (req , res) => {
     try {
-        const registrations = await RegisteredUser.find({ email : req.query.email });
+        const registrations = await Registrations.find({ email : req.query.email });
 
         res.status(200).json({
             registrations : registrations,
@@ -151,7 +168,7 @@ module.exports.donateRegister = async (req, res) => {
         if (user === null)
             throw new Error("User not registered");
 
-        const register = RegisteredUser({
+        const register = Registrations({
             email: req.body.email,
             city: req.body.city,
             date: req.body.date
