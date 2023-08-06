@@ -3,29 +3,9 @@ import { useContext, useEffect } from "react";
 import api from "../config/api";
 import CountUp from 'react-countup';
 import { useState } from "react";
+import ImageSlider from "../components/Slider";
 
 const Home = () => {
-
-    const images = [
-        {
-            path: "assets/image1.jpg"
-        },
-        {
-            path: "assets/image2.jpg"
-        },
-        {
-            path: "assets/image3.jpg"
-        },
-        {
-            path: "assets/image4.jpg"
-        },
-        {
-            path: "assets/image5.jpg"
-        },
-        {
-            path: "assets/image6.jpg"
-        }
-    ]
 
     const { setAuth } = useContext(AuthContext);
     const [registrations , setRegistrations] = useState(0);
@@ -87,21 +67,11 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="m-4 text-center">
+            <div className="m-5 text-center">
                 <div className="m-4 text-xl font-bold">
                     <span>Images</span>
                 </div>
-                <div className="my-8 m-8 grid sm:grid-cols-2 gap-x-12 gap-y-12">
-                    {images.map((image, index) => {
-                        return (
-                            <img
-                                src={image.path}
-                                className="w-full h-72 rounded-xl"
-                                key={index}
-                            />
-                        )
-                    })}
-                </div>
+                <ImageSlider/>
             </div>
         </div>
     );
