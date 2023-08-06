@@ -66,6 +66,11 @@ module.exports.addUser = async (req, res) => {
         if (userExist.length !== 0)
             throw new Error("user email already exist");
 
+        const passwordPattern = /^(?=.*[a-zA-Z]+)(?=.*[0-9]+)(?=.*[$@%!]+).{8,}$/;
+
+        if(!passwordPattern.test(req.body.password))
+            throw new Error("Minimum length of password must be 8.\nPassword must contain atleast 1 character , digit and special character ($ % ! @)\n.Character followed by digits then special character.");
+
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         const user = new LoggedUsers({
